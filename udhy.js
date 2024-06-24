@@ -1,52 +1,24 @@
-/*==================== toggle icon navbar ====================*/
-let menuIcon = document.querySelector('#menu-icon');
-let navbar = document.querySelector('.navbar');
+let ampm = document.getElementById('ampm')
+function displayTime(){
+    let dateTime = new Date();
+    let hr = dateTime.getHours();
+    let min = padZero(dateTime.getMinutes());
+    let sec = padZero(dateTime.getSeconds()); 
+    if(hr>12){
+        ampm.innerHTML = 'PM'
+        hr = hr - 12
+    }
+    else{
+        ampm.innerHTML = 'AM'
+    }
+    hr = padZero(hr);
+    document.getElementById('hours').innerHTML = hr;
+    document.getElementById('mins').innerHTML = min;
+    document.getElementById('seconds').innerHTML = sec;    
+}
 
-menuIcon.onclick = () => {
-    menuIcon.classList.toggle('bx-x');
-    navbar.classList.toggle('active');
-};
+function padZero(num){
+    return num<10?"0"+num:num
+}
 
-
-/*==================== scroll sections active link ====================*/
-let sections = document.querySelectorAll('section');
-let navLinks = document.querySelectorAll('header nav a');
-
-window.onscroll = () => {
-    sections.forEach(sec => {
-        let top = window.scrollY;
-        let offset = sec.offsetTop - 150;
-        let height = sec.offsetHeight;
-        let id = sec.getAttribute('id');
-
-        if (top >= offset && top < offset + height) {
-            navLinks.forEach(links => {
-                links.classList.remove('active');
-                document.querySe1ector('header nav a[href*=' + id + ']').c1assList.add('active');
-
-            });
-        };
-    });
-
-    /*==================== sticky navbar ====================*/
-    let header = document.querySelector('header');
-    header.classList.toggle('sticky', window.scrollY > 100);
-};
-/*==================== remove toggle icon and navbar when click navbar link (scroll) ====================*/
-   menuIcon.classList.toggle('bx-x');
-   navbar.classList.toggle('active');
-
-/*==================== scroll reveal ====================*/
-ScrollReveal({
-    reset: true,
-    distance: '80px',
-    duration: 2000,
-    delay: 200
-});
-
-    ScrollRevea1().reveal('.home-content, .heading', { origin: 'top'});
-    ScrollRevea1().reveal('.home-img, .services-container, .portfolio-box, .contact form', { origin: 'bottom'});
-    ScrollRevea1().reveal('.home-content h1, .about-img', { origin: 'left'});
-    ScrollRevea1().reveal('.home-content p, .about-content', { origin: 'right'});
-   
-/*==================== typed js ====================*/
+setInterval(displayTime, 100)
